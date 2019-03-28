@@ -26,6 +26,6 @@ int OddEvenSort(int arr[], int size);
 	Description: Sorts an array of 1s and 0s by moving all zeros to the start.
 	Input: An array of ones and zeros and its size.
 	Output: Same array, sorted by zeros and then ones.
-	Errors: Size bigger than 1, and can only handle integers.
+	Errors: Size bigger than 1, and can only handle an array of only ones and zeros.
 */
 int OneZeroSort(int arr[], int size);

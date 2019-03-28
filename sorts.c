@@ -23,6 +23,38 @@ int CheckParams(int arr[], int size)
 	return status;
 }
 
+int IsOnesAndZeros(int arr[], int size)
+{
+	int i = 0;
+
+	while (i < size)
+	{
+		if (((*(arr+i)) != 0) && ((*(arr+i)) != 1))
+		{
+			return -1;
+		}
+		i++;
+	}
+
+	return OK;
+}
+
+int CheckParamsBinary(int arr[], int size)
+{
+	int status = OK;
+
+	if (size < 2)
+	{
+		status = SIZE_ERROR;
+	}
+	else if ((arr == NULL) || (IsOnesAndZeros(arr, size)))
+	{
+		status = ARR_ERROR;
+	}
+
+	return status;
+}
+
 void SwapInt(int *x, int *y)
 {
 	int temp = *x;
@@ -89,13 +121,32 @@ int OddEvenSort(int arr[], int size)
 int OneZeroSort(int arr[], int size)
 {
 	int check;
+	int *head;
+	int *tail;
 
-	if ((check = CheckParams(arr, size)) != OK)
+	head = arr;
+	tail = arr + size - 1;
+
+	if ((check = CheckParamsBinary(arr, size)) != OK)
 	{
 		return check;
 	}	
 
-	OddEvenSort(arr, size);
+	while (head != tail)
+	{
+		if (*head == 0)
+		{
+			head++;
+		}
+		else if (*tail == 0)
+		{
+			SwapInt(head, tail);
+		}
+		else
+		{
+			tail--;
+		}
+	}
 
 	return OK;
 }
