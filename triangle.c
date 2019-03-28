@@ -1,126 +1,148 @@
+/*
+	Title:			triangle.c
+	Description:	Draw different triangles using ascii characters
+	Author:			Shalev Goldfarb
+	Last updated:	28.03.19
+*/
+
 #include <stdio.h>
+#include "triangle.h"
 
-void Triangle1(int size, char chr)
+int CheckParams(int size, char chr)
 {
-	int j = 0;
-	int i = 1;
-
-	while (size > 0)
+	if ((size < MIN_SIZE) || (size > MAX_SIZE))
 	{
-		j = i;
-		while (j > 0)
-		{
-			printf("%c", chr);
-			j--;
-		}
-		printf("\n");
-		size--;
-		i++;
+		return SIZE_ERROR;
+	}
+
+	if ((chr < '!') || (chr > '~'))
+	{
+		return CHAR_ERROR;
+	}
+
+	return OK;
+}
+
+void PrintLine(int size, char chr)
+{
+	for (; size > 0; size--)
+	{
+		putchar(chr);
 	}
 }
 
-void Triangle2(int size, char chr)
+void PrintLineWithSpaces(int size, char chr)
 {
-	int j = 0;
-	int i = size;
-
-	while (size > 0)
+	for (; size > 0; size--)
 	{
-		j = i;
-		while (j > 0)
-		{
-			printf("%c", chr);
-			j--;
-		}
-		printf("\n");
-		size--;
-		i--;
+		putchar(chr);
+		putchar(' ');
 	}
 }
 
-void Triangle3(int size, char chr)
+int Triangle1(int size, char chr)
 {
+	int i,check;
+
+	if ((check = CheckParams(size, chr)) != OK)
+	{
+		return check;
+	}
+
+	for (i = 1; i <= size; i++)
+	{
+		PrintLine(i, chr);
+		putchar('\n');
+	}
+
+	return OK;
+}
+
+int Triangle2(int size, char chr)
+{
+	int check;
+
+	if ((check = CheckParams(size, chr)) != OK)
+	{
+		return check;
+	}
+
+	while (size > 0)
+	{
+		PrintLine(size, chr);
+		putchar('\n');
+		size--;
+	}
+}
+
+int Triangle3(int size, char chr)
+{
+	int check;
+
+	if ((check = CheckParams(size, chr)) != OK)
+	{
+		return check;
+	}
+
 	Triangle1(size, chr);
 	Triangle2(size-1, chr);
 }
 
-void Triangle4(int size, char chr)
+int Triangle4(int size, char chr)
 {
-	int spaces = 0;
-	int i = 1;
-	int j = 0;
+	int check, i = 1;
+
+	if ((check = CheckParams(size, chr)) != OK)
+	{
+		return check;
+	}
 
 	while (size > 0)
 	{
-		spaces = size - 1;
-		while (spaces > 0)
-		{
-			printf(" ");
-			spaces--;
-		}
-		j = i;
-		while (j > 0)
-		{
-			printf("%c ", chr);
-			j--;
-		}
-		printf("\n");
+		PrintLine(size-1, ' ');
+		PrintLineWithSpaces(i, chr);
+		putchar('\n');
 		size--;
 		i++;
 	}
 }
 
-void Triangle5(int size, char chr)
+int Triangle5(int size, char chr)
 {
-	int spaces = 0;
-	int i = 1;
-	int j = 0;
+	int check, i = 1;
+
+	if ((check = CheckParams(size, chr)) != OK)
+	{
+		return check;
+	}
 
 	while (size > 0)
 	{
-		spaces = i - 1;
-		while (spaces > 0)
-		{
-			printf(" ");
-			spaces--;
-		}
-		
-		j = size;
-		while (j > 0)
-		{
-			printf("%c ", chr);
-			j--;
-		}
-		printf("\n");
+		PrintLine(i-1, ' ');
+		PrintLineWithSpaces(size, chr);
+		putchar('\n');
 		size--;
 		i++;
 	}	
 }
 
-void Triangle6(int size, char chr)
+int Triangle6(int size, char chr)
 {
-	int spaces = 0;
-	int i = 1;
-	int j = 0;
+	int check, i = 1;
+
+	if ((check = CheckParams(size, chr)) != OK)
+	{
+		return check;
+	}
 
 	Triangle4(size, chr);
 	size--;
 
 	while (size > 0)
 	{
-		spaces = i;
-		while (spaces > 0)
-		{
-			printf(" ");
-			spaces--;
-		}
-		j = size;
-		while (j > 0)
-		{
-			printf("%c ", chr);
-			j--;
-		}
-		printf("\n");
+		PrintLine(i, ' ');
+		PrintLineWithSpaces(size, chr);
+		putchar('\n');
 		size--;
 		i++;
 	}

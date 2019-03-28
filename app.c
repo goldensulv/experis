@@ -1,13 +1,15 @@
 #include "triangle.h"
 
+#define SIZE 40
+
 int main(void)
 {
-	Triangle1(5, '*');
-	Triangle2(5, 'o');
-	Triangle3(5, '$');
-	Triangle4(5, '#');
-	Triangle5(5, 'X');
-	Triangle6(5, 'a');
+	Triangle1(SIZE, '*');
+	Triangle2(SIZE, 'o');
+	Triangle3(SIZE, '$');
+	Triangle4(SIZE, '#');
+	Triangle5(SIZE, 'X');
+	Triangle6(SIZE, 'a');
 
 	return 0;
 }
