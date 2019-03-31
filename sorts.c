@@ -7,15 +7,15 @@
 #include <stdio.h> 	/* NULL */
 #include "sorts.h"
 
-int CheckParams(int arr[], int size)
+int CheckParams(int _arr[], int _size)
 {
 	int status = OK;
 
-	if (size < 2)
+	if (_size < 2)
 	{
 		status = SIZE_ERROR;
 	}
-	else if (arr == NULL)
+	else if (_arr == NULL)
 	{
 		status = ARR_ERROR;
 	}
@@ -23,31 +23,32 @@ int CheckParams(int arr[], int size)
 	return status;
 }
 
-int IsOnesAndZeros(int arr[], int size)
+int IsOnesAndZeros(int _arr[], int _size)
 {
 	int i = 0;
 
-	while (i < size)
+	while (i < _size)
 	{
-		if (((*(arr+i)) != 0) && ((*(arr+i)) != 1))
+		if (((*(_arr+i)) != 0) && ((*(_arr+i)) != 1))
 		{
-			return -1;
+			return ARR_ERROR;
 		}
+
 		i++;
 	}
 
 	return OK;
 }
 
-int CheckParamsBinary(int arr[], int size)
+int CheckParamsBinary(int _arr[], int _size)
 {
 	int status = OK;
 
-	if (size < 2)
+	if (_size < 2)
 	{
 		status = SIZE_ERROR;
 	}
-	else if ((arr == NULL) || (IsOnesAndZeros(arr, size)))
+	else if ((NULL == _arr) || (IsOnesAndZeros(_arr, _size)))
 	{
 		status = ARR_ERROR;
 	}
@@ -55,79 +56,87 @@ int CheckParamsBinary(int arr[], int size)
 	return status;
 }
 
-void SwapInt(int *x, int *y)
+void SwapInt(int *_x, int *_y)
 {
-	int temp = *x;
-	*x = *y;
-	*y = temp;
+	int temp = *_x;
+	*_x = *_y;
+	*_y = temp;
 }
 
-int BubbleSort(int arr[], int size)
+int BubbleUp(int _arr[], int _size)
 {
-	int i, check, status = 1;
+	int i, status = FALSE;
 
-	if ((check = CheckParams(arr, size)) != OK)
+	for (i = 0; i < _size - 1; i++)
+	{
+		if ((*(_arr + i)) > (*(_arr + i + 1)))
+		{
+			SwapInt(_arr+i, _arr+i+1);
+			status = TRUE;
+		}
+	}
+
+	return status;	
+}
+
+int BubbleSort(int _arr[], int _size)
+{
+	int i, check, status = TRUE;
+
+	if ((check = CheckParams(_arr, _size)) != OK)
 	{
 		return check;
 	}
 
-	while ((status != 0) && (size > 0))
+	while ((FALSE != status) && (_size > 0))
 	{
-		status = 0;
-
-		for (i = 0; i < size - 1; i++)
-		{
-			if ((*(arr + i)) > (*(arr + i + 1)))
-			{
-				SwapInt(arr+i, arr+i+1);
-				status++;
-			}
-		}
-		size--;
+		status = FALSE;
+		status = BubbleUp(_arr, _size);
+		_size--;
 	}
 
 	return OK;
 }
 
-int OddEvenSort(int arr[], int size)
+int OddEvenSort(int _arr[], int _size)
 {
-	int check, i = 0, counter = 0;
+	int check, odd = 0, even = 0;
 
-	if ((check = CheckParams(arr, size)) != OK)
+	if ((check = CheckParams(_arr, _size)) != OK)
 	{
 		return check;
 	}
 
-	while (((*(arr+i)) % 2) == 0)
+	while (((*(_arr+odd)) % 2) == 0)
 	{
-		counter++;
-		i++;
+		odd++;
 	}
 
-	i++;
+	even = odd;
+	odd++;
 
-	for (; i < size; i++)
+	for (; odd < _size; odd++)
 	{
-		if (((*(arr+i)) % 2) == 0)
+		if (((*(_arr+odd)) % 2) == 0)
 		{
-			SwapInt(arr+i, arr+counter);
-			counter++;
+			SwapInt(_arr+odd, _arr+even);
+			even++;
 		}
 	}
 
 	return OK;
 }
 
-int OneZeroSort(int arr[], int size)
+int OneZeroSort(int _arr[], int _size)
 {
 	int check;
 	int *head;
 	int *tail;
 
-	head = arr;
-	tail = arr + size - 1;
+	head = _arr;
+	tail = _arr+_size-1;
 
-	if ((check = CheckParamsBinary(arr, size)) != OK)
+	if ((check = CheckParamsBinary(_arr, _size)) != OK)
 	{
 		return check;
 	}	
