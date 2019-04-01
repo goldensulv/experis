@@ -2,21 +2,16 @@
 	Title:			hw4_test.c
 	Description:	Various functions
 	Author:			Shalev Goldfarb
-	Last updated:	01.04.19
+	Last updated:	02.04.19
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "hw4.h"
 
-#define OK 0
+#define PERSON people[person_index]
 
-typedef struct person
-{
-	char name[16];
-	int age;
-	int id;
-} person_t;
-
+/* main */
 int main(void)
 {
 	person_t *people = NULL;
@@ -33,21 +28,28 @@ int main(void)
 	for (person_index = 0; person_index < num_of_people; person_index++)
 	{
 		printf("Please enter the name for person #%d:\n", person_index + 1);
-		gets(people[person_index].name);
-		printf("Name: %s\n", people[person_index].name);
+		gets(PERSON.name);
+		printf("Name: %s.\n", PERSON.name);
 
 		printf("Please enter the age for person #%d:\n", person_index + 1);
-		scanf("%d", &(people[person_index].age));
-		printf("Age: %d.\n", people[person_index].age);
+		scanf("%d", &(PERSON.age));
+		printf("Age: %d.\n", PERSON.age);
 
 		printf("Please enter the ID number for person #%d:\n", person_index + 1);
-		scanf("%d", &(people[person_index].id));
-		printf("ID number: %d.\n", people[person_index].id);
-		
+		scanf("%d", &(PERSON.id));
+		printf("ID number: %d.\n", PERSON.id);
+
 		getchar();
 	}
 
-	printf("%s, %s, %s.\n", people[0].name, people[1].name, people[2].name);
+	SortAlphabetic(people, num_of_people);
+
+	person_index = 0;
+	while (person_index < num_of_people)
+	{
+		printf("Person #%d)\t%s,\tage %2d,\tID - %d.\n", person_index + 1, PERSON.name,	PERSON.age, PERSON.id);
+		person_index++;
+	}
 
 	free(people);
 
