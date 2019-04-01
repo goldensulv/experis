@@ -1,8 +1,8 @@
 /*
-	Title:			hw2.c
+	Title:			hw3_test.c
 	Description:	Various functions
 	Author:			Shalev Goldfarb
-	Last updated:	28.03.19
+	Last updated:	01.04.19
 */
 
 #include <stdio.h>
@@ -14,12 +14,14 @@
 int main(void)
 {
 	char str[MAX_STR_SIZE];
-	char c[1];
+	char c;
 	int num;
+	int status;
 	int option;
 
 	puts("Choose a function to use:\n\t1. ReverseStr\n\t2. SqueezeStr\n\t3. Dec2Bin\n\t4. Exit");
 	scanf("%d", &option);
+	getchar();
 	printf("You chose option %d.\n", option);
 
 	switch (option)
@@ -27,18 +29,46 @@ int main(void)
 		case 1:
 		{
 			puts("Please enter a string to reverse:");
-			sprintf(str, "%s");
+			gets(str);
 			printf("The string to reverse is: %s\n", str);
-			printf("The reversed string is: %s\n", ReverseStr(str));
+			status = ReverseStr(str);
+			if (!status)
+			{
+				printf("The reversed string is: %s\n", str);	
+			}
 			break;
 		}
 		case 2:
 		{
 			puts("Please enter a string to squeeze:");
-			scanf("%s", str);
+			gets(str);
 			puts("Please enter a character to squeeze out:");
-			scanf("%s", c);
-			printf("The string to squeeze is %s and the character to squeeze out is %s\n", str, c);
+			c = getc(stdin);
+			printf("The string to squeeze is %s and the character to squeeze out is %c\n", str, c);
+			status = SqueezeStr(str, c);
+			if (!status)
+			{
+				printf("The sequeezed string is: %s\n", str);	
+			}
+			break;
+		}
+		case 3:
+		{
+			puts("Please enter a non-negative number to display its binary representation:");
+			scanf("%d", &num);
+			status = Dec2Bin(str, num);
+			if (!status)
+			{
+				printf("The number you entered is %d, and in binary it's %s.\n", num, str);
+			}
+			break;
+		}
+		case 4:
+		{
+			break;
+		}
+		default:
+		{
 			break;
 		}
 	}
