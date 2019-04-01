@@ -5,12 +5,13 @@
 	Last updated:	01.04.19
 */
 #include <stdio.h>
+#include <string.h>
 #include "hw3.h"
 
 int StrLen(char *_str)
 {
 	int len = 0;
-	while ('\0' != *_str)
+	while (EOS != *_str)
 	{
 		_str++;
 		len++;
@@ -19,20 +20,22 @@ int StrLen(char *_str)
 	return len;
 }
 
+/*
 char *StrCpy(char *_src, char *_dest)
 {
 	char *head = _dest;
 
-	while ('\0' != *_src)
+	while (EOS != *_src)
 	{
 		*_dest = *_src;
 		_dest++;
 		_src++;
 	}
-	*_dest = '\0';
+	*_dest = EOS;
 	
 	return head;
 }
+*/
 
 void SwapChrs(char *_c, char *_z)
 {
@@ -62,32 +65,30 @@ int ReverseStr(char *_str)
 	return OK;
 }
 
-int SqueezeStr(char *_str, const char _c)
+int SqueezeStr(char *_str, const char *_chars)
 {
-	char temp[255];
-	char *temp_runner = temp;
-	char *str_runner = _str;
+	char *write_ptr = _str;
+	char *read_ptr = _str;
 
 	if (NULL == _str)
 	{
 		return STR_ERROR;
 	}
-	if ('\0' == _c)
+	if (NULL == _chars)
 	{
 		return CHR_ERROR;
 	}
 
-	while ('\0' != *str_runner)
+	while (EOS != *read_ptr)
 	{
-		if (_c != *str_runner)
+		if (NULL == strchr(_chars, *read_ptr))
 		{
-			*temp_runner = *str_runner;
-			temp_runner++;
+			*write_ptr = *read_ptr;
+			write_ptr++;
 		}
-		str_runner++;
+		read_ptr++;
 	}
-
-	StrCpy(temp, _str);
+	*write_ptr = EOS;
 
 	return OK;
 }
@@ -120,7 +121,7 @@ int Dec2Bin(char *_str, int _num)
 	}
 	*_str = '1';
 	_str++;
-	*_str = '\0';
+	*_str = EOS;
 	ReverseStr(head);
 
 	return OK;

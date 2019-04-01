@@ -14,7 +14,7 @@
 int main(void)
 {
 	char str[MAX_STR_SIZE];
-	char c;
+	char chars[MAX_STR_SIZE];
 	int num;
 	int status;
 	int option;
@@ -42,10 +42,10 @@ int main(void)
 		{
 			puts("Please enter a string to squeeze:");
 			gets(str);
-			puts("Please enter a character to squeeze out:");
-			c = getc(stdin);
-			printf("The string to squeeze is %s and the character to squeeze out is %c\n", str, c);
-			status = SqueezeStr(str, c);
+			puts("Please enter characters to squeeze out:");
+			gets(chars);
+			printf("The string to squeeze is %s and the character to squeeze out is %s\n", str, chars);
+			status = SqueezeStr(str, chars);
 			if (!status)
 			{
 				printf("The sequeezed string is: %s\n", str);	

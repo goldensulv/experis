@@ -10,21 +10,23 @@
 #define NUM_ERROR 3
 #define OK 0
 
+#define EOS '\0'
+
 /*
 	Description: Reverses a string.
 	Input: A string. String must have a terminating null byte.
 	Output: The input string reversed.
-	Errors:	STR_ERROR returned if string is empty.
+	Errors:	STR_ERROR returned if string is NULL.
 */
 int ReverseStr(char *_str);
 
 /*
-	Description: Removes all instances of character _c from the string _str.
-	Input: A string with a terminating null byte, and a character.
-	Output: The input string with all instances of _c removed.
-	Errors: STR_ERROR if string is empty. CHR_ERROR if char is an empty character.
+	Description: Removes all instances of characters in _chars from the string _str.
+	Input: A string with a terminating null byte, and characters to remove from it.
+	Output: The input string with all instances of character in _chars removed.
+	Errors: STR_ERROR if string is NULL. CHR_ERROR if chars is NULL.
 */
-int SqueezeStr(char *_str, const char _c);
+int SqueezeStr(char *_str, const char *_chars);
 
 /*
 	Description: Returns the binary representation of the integer _num.
