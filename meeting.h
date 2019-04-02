@@ -33,7 +33,7 @@ void MeetingDestroy(meeting_t *_meeting);
 /*
 	Description: S
 */
-void MeetingPrint(meeting_t *_meeting)
+void MeetingPrint(meeting_t *_meeting);
 
 /*
 	Description: S

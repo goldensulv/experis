@@ -9,7 +9,7 @@
 
 #include <stdlib.h>
 
-#define Uint (unsigned int)
+#define Uint unsigned int
 
 typedef struct calendar calendar_t;
 

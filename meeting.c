@@ -40,6 +40,6 @@ void MeetingDestroy(meeting_t *_meeting)
 
 void MeetingPrint(meeting_t *_meeting)
 {
-	printf("The meeting - %s - will start at %f and end at %f.\n", 
+	printf("%s - will start at %2.1f and end at %2.1f.\n", 
 				_meeting->subject, _meeting->start, _meeting->end);
 }

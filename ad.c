@@ -6,6 +6,7 @@
 */
 
 #include "ad.h"
+#include "meeting.h"
 
 typedef struct calendar
 {
@@ -14,7 +15,7 @@ typedef struct calendar
 
 calendar_t *ADCreate(Uint _size)
 {
-	calendar_t *diary = calloc((sizeof(calendar_t)) * _size);
+	calendar_t *diary = calloc(_size, sizeof(calendar_t));
 
 	if (NULL == diary)
 	{
