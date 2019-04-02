@@ -8,11 +8,11 @@
 #include <stdio.h>
 
 #include "meeting.h"
-#include "ad.h"
 
 int main(void)
 {
 	meeting_t *meeting = MeetingCreate(14.5, 16.5, "Doctor's appointment");
+	
 	MeetingDestroy(meeting);
 
 	return OK;

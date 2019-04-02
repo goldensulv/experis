@@ -32,13 +32,14 @@ meeting_t *MeetingCreate(float _start, float _end, const char _subject[])
 	return meeting;
 }
 
-void MeetingDestroy(meeting_t *meeting)
+void MeetingDestroy(meeting_t *_meeting)
 {
-	free(meeting);
-	meeting = NULL;
+	free(_meeting);
+	_meeting = NULL;
 }
 
-void MeetingPrint(meeting_t *meeting)
+void MeetingPrint(meeting_t *_meeting)
 {
-	printf("The meeting - %s - will start at %f and end at %f.\n")
+	printf("The meeting - %s - will start at %f and end at %f.\n", 
+				_meeting->subject, _meeting->start, _meeting->end);
 }
