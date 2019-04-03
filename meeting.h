@@ -12,21 +12,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define OK 0
-
-typedef struct meeting meeting_t;
+typedef struct meeting
+{
+	float m_start;
+	float m_end;
+	char m_subject[20];
+} meeting_t;
 
 /*
 	Description: Allocates memory and creates a variable of type meeting_t with the given paramaters.
 	Input:	Two floating point numbers for the _start and _end times of the meeting,
 			and a char* with the meeting's _subject.
 	Output:	Dynamically allocated meeting_t with the given paramaters.
-	Errors\Return:	If _start >= _end returns NULL. On success returns a pointer to meeting_t.
+	Errors\Return:	If _start >= _end returns NULL. Returns NULL on allocation error.
+			 On success returns a pointer to meeting_t.
 */
 meeting_t *MeetingCreate(float _start, float _end, const char _subject[]);
 
 /*
-	Description: Frees the memory previously allocated by MeetingCreate() using free().
+	Description: Frees the memory previously allocated by MeetingCreate().
 */
 void MeetingDestroy(meeting_t *_meeting);
 
@@ -40,8 +44,9 @@ void MeetingPrint(meeting_t *_meeting);
 	Input:
 	Output:
 	Errors\Return:
+
+int MeetingSet(meeting_t *meeting, float _start, float _end, char _subject[]);
 */
-int MeetingSet(float _start, float _end, char _subject[]);
 
 /*
 	Description: Gets the paramaters from meeting into the given pointers.
@@ -49,7 +54,7 @@ int MeetingSet(float _start, float _end, char _subject[]);
 			a char * with the meeting's _subject.
 	Output:	Should extract the data from meeting
 	Errors\Return:
-*/
-int MeetingGet(meeting_t meeting, float *_start, float *_end, char _subject[]);
 
+int MeetingGet(meeting_t *meeting, float *_start, float *_end, char _subject[]);
+*/
 #endif /* __MEETING_H__ */

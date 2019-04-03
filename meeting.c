@@ -7,27 +7,24 @@
 
 #include "meeting.h"
 
-typedef struct meeting
-{
-	float start;
-	float end;
-	char subject[20];
-} meeting_t;
-
 meeting_t *MeetingCreate(float _start, float _end, const char _subject[])
 {
-	meeting_t *meeting = NULL;
+	meeting_t* meeting = NULL;
 
 	if (_start >= _end)
 	{
-		fprintf(stderr, "Wrong time!");
+		return NULL;
 	}
 
-	meeting = malloc(sizeof(meeting_t));
+	meeting = (meeting_t*)malloc(sizeof(meeting_t));
+	if (NULL == meeting)
+	{
+		return meeting;
+	}
 
-	meeting->start = _start;
-	meeting->end = _end;
-	strcpy(meeting->subject, _subject);
+	meeting->m_start = _start;
+	meeting->m_end = _end;
+	strcpy(meeting->m_subject, _subject);
 
 	return meeting;
 }
@@ -35,11 +32,15 @@ meeting_t *MeetingCreate(float _start, float _end, const char _subject[])
 void MeetingDestroy(meeting_t *_meeting)
 {
 	free(_meeting);
-	_meeting = NULL;
 }
 
 void MeetingPrint(meeting_t *_meeting)
 {
+	if (NULL == _meeting)
+	{
+		return;
+	}
+
 	printf("%s - will start at %2.1f and end at %2.1f.\n", 
-				_meeting->subject, _meeting->start, _meeting->end);
+				_meeting->m_subject, _meeting->m_start, _meeting->m_end);
 }

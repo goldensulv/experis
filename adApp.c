@@ -26,7 +26,12 @@ int main(void)
 	MeetingPrint(rendevous);
 	MeetingPrint(sit_down);
 	calendar = ADCreate(4);
-	
+	ADInsert(calendar, meeting);
+	ADInsert(calendar, appointment);
+	ADInsert(calendar, rendevous);
+	ADInsert(calendar, sit_down);
+	ADRemove(calendar, 14.5);
+	ADPrint(calendar);
 	MeetingDestroy(meeting);
 	MeetingDestroy(appointment);
 	MeetingDestroy(rendevous);

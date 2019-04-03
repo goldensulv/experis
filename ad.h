@@ -8,12 +8,23 @@
 #define __AD_H__
 
 #include <stdlib.h>
+#include "meeting.h"
 
 #define Uint unsigned int
-#define PARAM_ERROR 1
-#define ALLOC_ERROR 2
 
-typedef struct calendar calendar_t;
+typedef struct calendar
+{
+	Uint m_capacity;
+	Uint m_numOfMeetings;
+	meeting_t** m_entries;
+} calendar_t;
+
+enum status
+{
+	OK,
+	PARAM_ERROR,
+	ALLOC_ERROR
+};
 
 /*
 	Description: Allocates memory for a diary with initial capacity of _size meetings.
@@ -24,10 +35,34 @@ typedef struct calendar calendar_t;
 calendar_t *ADCreate(Uint _size);
 
 /*
-	Description: Frees the memory previously allocated by ADCreate(), using free().
+	Description: Frees the memory previously allocated by ADCreate().
 */
 void ADDestroy(calendar_t *_diary);
 
-int ADInsert(calendar_t *_diary, meeting_t *_meeting);
+/*
+	Description: Locates a meeting in _diary which starts at time _startTime.
+	Input: calendar_t and _startTime.
+	Errors\Return: Returns NULL if _diary is NULL or _startTime invalid (_startTime > 24 || _startTime < 0).
+*/
+meeting_t *ADFind(calendar_t *_diary, float _startTime);
+
+/*
+	Description: Inserts an appointment to the diary.
+	Input: Pointer to calendar_t and pointer to meeting_t.
+	Errors\Return: enum status return.
+*/
+enum status ADInsert(calendar_t *_diary, meeting_t *_meeting);
+
+/*
+*/
+enum status ADReaclloc(calendar_t *_diary);
+
+/*
+*/
+enum status ADRemove(calendar_t *_diary, float _start_time);
+
+/*
+*/
+void ADPrint(calendar_t *_diary);
 
 #endif /* __AD_H__ */
