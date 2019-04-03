@@ -2,7 +2,7 @@
 	Title:			ad.c
 	Description:	Appointments diary
 	Author:			Shalev Goldfarb
-	Last updated:	02.04.19
+	Last updated:	03.04.19
 */
 
 #include "ad.h"
@@ -37,7 +37,7 @@ void ADDestroy(calendar_t* _diary)
 
 meeting_t* ADFind(calendar_t* _diary, float _start_time, Uint* _index)
 {
-	Uint index;
+	Uint index = 0;
 	Uint last_index;
 
 	if (NULL == _diary)
@@ -50,9 +50,7 @@ meeting_t* ADFind(calendar_t* _diary, float _start_time, Uint* _index)
 		return NULL;
 	}
 
-	index = 0;
 	last_index = _diary->m_numOfMeetings;
-
 	while (index < last_index)
 	{
 		if ((*(_diary->m_entries + index))->m_start == _start_time)

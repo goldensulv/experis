@@ -2,7 +2,7 @@
 	Title:			ad.h
 	Description:	Appointment diary
 	Author:			Shalev Goldfarb
-	Last updated:	02.04.19
+	Last updated:	03.04.19
 */
 #ifndef __AD_H__
 #define __AD_H__

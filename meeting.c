@@ -2,7 +2,7 @@
 	Title:			meeting.c
 	Description:	Meetings
 	Author:			Shalev Goldfarb
-	Last updated:	02.04.19
+	Last updated:	03.04.19
 */
 
 #include "meeting.h"

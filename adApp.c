@@ -2,7 +2,7 @@
 	Title:			adApp.c
 	Description:	Meetings
 	Author:			Shalev Goldfarb
-	Last updated:	02.04.19
+	Last updated:	03.04.19
 */
 
 #include <stdio.h>
@@ -14,7 +14,8 @@
 
 int main(void)
 {
-	int index, option = 0;
+	int option = 0;
+	Uint index;
 	char subject[MAX_SUBJECT_LEN];
 	float start = 0, end = 0;
 	Uint size = 0;
@@ -23,11 +24,18 @@ int main(void)
 	meeting_t *appointment = NULL;
 	meeting_t *rendevous = NULL;
 	meeting_t *sit_down = NULL;
-	calendar_t *calendar = ADCreate(4);;
+	calendar_t *calendar = NULL;
 
-	while (9 != option)
+	while (6 != option)
 	{
-		printf("Please choose an option:\n\t1) Add meeting to calendar\n\t2) ADCreate\n\t5) ADDestroy\n\t6) ADInsert\n\t7) ADFind\n\t8) ADPrint\n\t9) Exit\n");
+		if (NULL == calendar)
+		{
+			printf("Enter the initial capacity for the calendar: ");
+			scanf("%u", &size);
+			calendar = ADCreate(size);
+		}
+
+		printf("Please choose an option:\n\t1) Add meeting to calendar\n\t2) Remove meeting from calendar\n\t3) Find meeting\n\t4) Print calendar\n\t5) Delete calendar\n\t6) Exit\n");
 		scanf("%d", &option);
 		getchar();
 
@@ -46,67 +54,49 @@ int main(void)
 			}
 			case (2):
 			{
-
-				break;
-			}
-			case (3):
-			{
 				printf("Enter start time of meeting to remove: ");
 				/* problem: what happens when you destroy a meeting without removing it? no good */
 				scanf("%f", &start);
 				ADRemove(calendar, start);
 				break;
 			}
+			case (3):
+			{
+				printf("Enter start time of meeting to find: ");
+				scanf("%f", &start);				
+				MeetingPrint(ADFind(calendar, start, &index));
+				break;
+			}
 			case (4):
 			{
+				ADPrint(calendar);
 				break;
 			}
 			case (5):
 			{
+				ADDestroy(calendar);
+				calendar = NULL;
 				break;
 			}
 			case (6):
 			{
 				break;
 			}
-			case (7):
+			default:
 			{
-				break;
-			}
-			case (8):
-			{
-				break;
-			}
-			case (9):
-			{
+				puts("Invalid option");
 				break;
 			}
 		}
 	}
-
+/*
 	appointment = MeetingCreate(9, 10, "Pencil sharpening");
 	rendevous = MeetingCreate(13.5, 15, "Flower knitting");
 	sit_down = MeetingCreate(10, 11, "The mousse discussion");
-	MeetingPrint(meeting);
-	MeetingPrint(appointment);
-	MeetingPrint(rendevous);
-	MeetingPrint(sit_down);
-	puts("");
-	ADInsert(calendar, rendevous);
-	ADInsert(calendar, sit_down);
-	ADInsert(calendar, appointment);
-/*	ADRemove(calendar, 14.5);
-*/	ADPrint(calendar);
-	MeetingDestroy(meeting);
-	MeetingDestroy(appointment);
-	MeetingDestroy(rendevous);
-	MeetingDestroy(sit_down);
-	ADDestroy(calendar);
-
+*/
 	return OK;
 
 	/* TO DO:
-			main loop
 			ADDestroy() to destroy meetings (?)
 			documentation
 			input checks on all functions
