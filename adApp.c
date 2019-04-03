@@ -26,7 +26,11 @@ int main(void)
 	MeetingPrint(rendevous);
 	MeetingPrint(sit_down);
 	calendar = ADCreate(4);
+	
 	MeetingDestroy(meeting);
+	MeetingDestroy(appointment);
+	MeetingDestroy(rendevous);
+	MeetingDestroy(sit_down);
 	ADDestroy(calendar);
 
 	return OK;
