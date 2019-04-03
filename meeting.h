@@ -27,17 +27,17 @@ typedef struct meeting
 	Errors\Return:	If _start >= _end returns NULL. Returns NULL on allocation error.
 			 On success returns a pointer to meeting_t.
 */
-meeting_t *MeetingCreate(float _start, float _end, const char _subject[]);
+extern meeting_t *MeetingCreate(float _start, float _end, const char _subject[]);
 
 /*
 	Description: Frees the memory previously allocated by MeetingCreate().
 */
-void MeetingDestroy(meeting_t *_meeting);
+extern void MeetingDestroy(meeting_t *_meeting);
 
 /*
 	Description: S
 */
-void MeetingPrint(meeting_t *_meeting);
+extern void MeetingPrint(meeting_t *_meeting);
 
 /*
 	Description: S

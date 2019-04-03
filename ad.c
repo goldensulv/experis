@@ -45,7 +45,7 @@ meeting_t* ADFind(calendar_t *_diary, float _start_time)
 		return NULL;
 	}
 
-	if ((_start_time > 24) || (_start_time < 0))
+	if ((_start_time > TIME_MAX) || (_start_time < TIME_MIN))
 	{
 		return NULL;
 	}
@@ -57,7 +57,7 @@ meeting_t* ADFind(calendar_t *_diary, float _start_time)
 	{
 		if ((*(_diary->m_entries + index))->m_start == _start_time)
 		{	
-			return *(_diary->m_entries + index);
+			return (*(_diary->m_entries + index));
 		}
 		++index;
 	}
@@ -65,17 +65,18 @@ meeting_t* ADFind(calendar_t *_diary, float _start_time)
 	return NULL;
 }
 
-enum status ADRealloc(calendar_t *_diary)
+static enum status ADRealloc(calendar_t *_diary)
 {
 	void *temp = NULL;
 
-	temp = realloc(_diary->m_entries, _diary->m_numOfMeetings * 2);
+	temp = realloc(_diary->m_entries, _diary->m_capacity * 2);
 	if (NULL == temp)
 	{
 		return ALLOC_ERROR;
 	}
 
 	_diary->m_entries = temp;
+	_diary->m_capacity = _diary->m_capacity * 2;
 
 	return OK;
 }
@@ -100,6 +101,13 @@ enum status ADInsert(calendar_t *_diary, meeting_t* _meeting)
 	return OK;
 }
 
+void ADSwapMeetings(meeting_t *_meeting1, meeting_t *_meeting2)
+{
+	meeting_t temp = *_meeting1;
+	*_meeting1 = *_meeting2;
+	*_meeting2 = temp;
+}
+
 enum status ADRemove(calendar_t *_diary, float _start_time)
 {
 	meeting_t *meeting = ADFind(_diary, _start_time);
@@ -109,6 +117,8 @@ enum status ADRemove(calendar_t *_diary, float _start_time)
 		meeting->m_end = 0;
 		meeting->m_subject[0] = '\0';
 	}
+
+	ADSwapMeetings(meeting, _diary->m_entries[_diary->m_numOfMeetings - 1]);
 
 	(_diary->m_numOfMeetings)--;
 }
@@ -121,14 +131,10 @@ void ADPrint(calendar_t *_diary)
 		return;
 	}
 
-	while (appointments < _diary->m_numOfMeetings)
+	while (appointments < (_diary->m_numOfMeetings))
 	{
 		MeetingPrint(*(_diary->m_entries + appointments));
 		appointments++;
 	}
 }
 
-void ADSwapMeetings(meeting_t *meeting1, meeting_t *meeting2)
-{
-	
-}
