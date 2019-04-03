@@ -12,6 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TIME_MAX 24
+#define TIME_MIN 0
+
 typedef struct meeting
 {
 	float m_start;
@@ -27,7 +30,7 @@ typedef struct meeting
 	Errors\Return:	If _start >= _end returns NULL. Returns NULL on allocation error.
 			 On success returns a pointer to meeting_t.
 */
-extern meeting_t *MeetingCreate(float _start, float _end, const char _subject[]);
+extern meeting_t* MeetingCreate(float _start, float _end, const char _subject[]);
 
 /*
 	Description: Frees the memory previously allocated by MeetingCreate().

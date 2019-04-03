@@ -11,8 +11,6 @@
 #include "meeting.h"
 
 #define Uint unsigned int
-#define TIME_MAX 24
-#define TIME_MIN 0
 
 typedef struct calendar
 {
@@ -25,7 +23,8 @@ enum status
 {
 	OK,
 	PARAM_ERROR,
-	ALLOC_ERROR
+	ALLOC_ERROR,
+	OVERLAP_ERROR
 };
 
 /*
@@ -34,38 +33,38 @@ enum status
 	Errors\Return: 	Returns NULL on allocation failure and produces an error to stderr.
 					Returns a pointer to a diary with _size capacity.
 */
-extern calendar_t *ADCreate(Uint _size);
+extern calendar_t* ADCreate(Uint _size);
 
 /*
 	Description: Frees the memory previously allocated by ADCreate().
 */
-extern void ADDestroy(calendar_t *_diary);
+extern void ADDestroy(calendar_t* _diary);
 
 /*
 	Description: Locates a meeting in _diary which starts at time _startTime.
 	Input: calendar_t and _startTime.
 	Errors\Return: Returns NULL if _diary is NULL or _startTime invalid (_startTime > 24 || _startTime < 0).
 */
-extern meeting_t *ADFind(calendar_t *_diary, float _startTime);
+extern meeting_t* ADFind(calendar_t* _diary, float _startTime, Uint* _index);
 
 /*
 	Description: Inserts an appointment to the diary.
 	Input: Pointer to calendar_t and pointer to meeting_t.
 	Errors\Return: enum status return.
 */
-extern enum status ADInsert(calendar_t *_diary, meeting_t *_meeting);
+extern enum status ADInsert(calendar_t* _diary, meeting_t* _meeting);
 
 /*
 	Description: Removes a meeting which starts at _start_time from _diary.
 	Input: Pointer to calendar_t, and _start_time;
 	Errors\Return: enum status return.
 */
-extern enum status ADRemove(calendar_t *_diary, float _start_time);
+extern enum status ADRemove(calendar_t* _diary, float _start_time);
 
 /*
 	Description: Prints the entire appointment diary.
 	Input: Pointer to calendar_t.
 */
-extern void ADPrint(calendar_t *_diary);
+extern void ADPrint(calendar_t* _diary);
 
 #endif /* __AD_H__ */

@@ -11,7 +11,8 @@ meeting_t *MeetingCreate(float _start, float _end, const char _subject[])
 {
 	meeting_t* meeting = NULL;
 
-	if (_start >= _end)
+	if ((_start >= _end) || (_start < TIME_MIN) || (_start > TIME_MAX) 
+		|| (_end < TIME_MIN) || (_end > TIME_MAX))
 	{
 		return NULL;
 	}
