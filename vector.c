@@ -43,16 +43,16 @@ void VectorDestroy(vector_t* _vector)
 	free(_vector);
 }
 
-static ADTErr VectorRealloc(_vector)
+static ADTErr VectorRealloc(vector_t* _vector)
 {
-	vector_t* temp;
+	int* temp;
 
 	if ((NULL == _vector) || (NULL == _vector->m_items))
 	{
 		return ALLOCATION_ERROR;
 	}
 
-	temp = (vector_t*)realloc(_vector->m_items, _vector->m_size + _vector->m_blockSize);
+	temp = (int*)realloc(_vector->m_items, _vector->m_size + _vector->m_blockSize);
 	if (NULL == temp)
 	{
 		return REALLOCATION_ERROR;
