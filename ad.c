@@ -31,6 +31,11 @@ calendar_t* ADCreate(Uint _size)
 
 void ADDestroy(calendar_t* _diary)
 {
+	if (NULL == _diary)
+	{
+		return;
+	}
+
 	while (_diary->m_numOfMeetings > 0)
 	{
 		MeetingDestroy(_diary->m_entries[_diary->m_numOfMeetings - 1]);
@@ -72,6 +77,11 @@ meeting_t* ADFind(calendar_t* _diary, float _start_time, Uint* _index)
 static enum status ADRealloc(calendar_t* _diary)
 {
 	void* temp = NULL;
+
+	if (NULL == _diary)
+	{
+		return PARAM_ERROR;
+	}
 
 	temp = realloc(_diary->m_entries, _diary->m_capacity * 2);
 	if (NULL == temp)
@@ -180,13 +190,14 @@ void ADSwapMeetings(meeting_t *_meeting1, meeting_t *_meeting2)
 enum status ADRemove(calendar_t *_diary, float _start_time)
 {
 	Uint index = 0;
+	meeting_t *meeting = NULL;
 
 	if (NULL == _diary)
 	{
 		return PARAM_ERROR;
 	}
 
-	meeting_t *meeting = ADFind(_diary, _start_time, &index);
+	meeting = ADFind(_diary, _start_time, &index);
 	if (NULL != meeting)
 	{
 		meeting->m_start = 0;

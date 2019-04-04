@@ -12,6 +12,16 @@
 
 #define MAX_SUBJECT_LEN 30
 
+enum options
+{
+	ADD = 1,
+	REMOVE,
+	FIND,
+	PRINT,
+	DELETE,
+	EXIT
+};
+
 int main(void)
 {
 	int option = 0;
@@ -23,7 +33,7 @@ int main(void)
 	meeting_t *meeting = NULL;
 	calendar_t *calendar = NULL;
 
-	while (6 != option)
+	while (EXIT != option)
 	{
 		if (NULL == calendar)
 		{
@@ -38,7 +48,7 @@ int main(void)
 
 		switch (option)
 		{
-			case (1):
+			case (ADD):
 			{
 				printf("Enter meeting subject: ");
 				gets(subject);
@@ -49,7 +59,7 @@ int main(void)
 				ADInsert(calendar, MeetingCreate(start, end, subject));
 				break;
 			}
-			case (2):
+			case (REMOVE):
 			{
 				printf("Enter start time of meeting to remove: ");
 				/* problem: what happens when you destroy a meeting without removing it? no good */
@@ -57,25 +67,25 @@ int main(void)
 				ADRemove(calendar, start);
 				break;
 			}
-			case (3):
+			case (FIND):
 			{
 				printf("Enter start time of meeting to find: ");
 				scanf("%f", &start);				
 				MeetingPrint(ADFind(calendar, start, &index));
 				break;
 			}
-			case (4):
+			case (PRINT):
 			{
 				ADPrint(calendar);
 				break;
 			}
-			case (5):
+			case (DELETE):
 			{
 				ADDestroy(calendar);
 				calendar = NULL;
 				break;
 			}
-			case (6):
+			case (EXIT):
 			{
 				ADDestroy(calendar);
 				calendar = NULL;				
@@ -96,7 +106,6 @@ int main(void)
 	return OK;
 
 	/* TO DO:
-			ADDestroy() to destroy meetings (?)
 			documentation
 			input checks on all functions
 			test on different inputs

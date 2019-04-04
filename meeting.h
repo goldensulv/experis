@@ -38,7 +38,7 @@ extern meeting_t* MeetingCreate(float _start, float _end, const char _subject[])
 extern void MeetingDestroy(meeting_t *_meeting);
 
 /*
-	Description: S
+	Description: Prints a meeting to standard output.
 */
 extern void MeetingPrint(meeting_t *_meeting);
 

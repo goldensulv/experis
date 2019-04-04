@@ -42,6 +42,6 @@ void MeetingPrint(meeting_t *_meeting)
 		return;
 	}
 
-	printf("%s - will start at %2.1f and end at %2.1f.\n", 
+	printf("%s - will start at %1.f and end at %2.1f.\n", 
 				_meeting->m_subject, _meeting->m_start, _meeting->m_end);
 }
