@@ -2,7 +2,7 @@
 	Title:			meeting.h
 	Description:	Meetings
 	Author:			Shalev Goldfarb
-	Last updated:	03.04.19
+	Last updated:	04.04.19
 */
 
 #ifndef __MEETING_H__
