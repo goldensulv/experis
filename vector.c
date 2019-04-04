@@ -68,7 +68,7 @@ ADTErr VectorAdd(vector_t* _vector, int _item)
 	int status = OK;
 	if (NULL == _vector)
 	{
-		return ALLOCATION_ERROR;
+		return PARAMETER_ERROR;
 	}
 
 	if (_vector->m_nItems == _vector->m_size)
@@ -92,12 +92,63 @@ ADTErr VectorAdd(vector_t* _vector, int _item)
 
 ADTErr VectorDelete(vector_t* _vector, int* _item)
 {
+	if ((NULL == _vector) || (NULL == _item))
+	{
+		return PARAMETER_ERROR;
+	}
+
 	if (_vector->m_nItems > 0)
 	{
-		*_item = _vector->m_items[_vector->m_nItems];
-		_vector->m_items[_vector->m_nItems] = 0;
+		*_item = _vector->m_items[_vector->m_nItems - 1];
+		_vector->m_items[_vector->m_nItems - 1] = 0;
 		(_vector->m_nItems)--;
 	}
+
+	return OK;
+}
+
+ADTErr VectorItemsNum(vector_t* _vector, int* _numOfItems)
+{
+	if ((NULL == _vector) || (NULL == _numOfItems))
+	{
+		return POINTER_ERROR;
+	}
+
+	if (_vector->m_nItems > 0)
+	{
+		*_numOfItems = _vector->m_nItems;
+	}
+
+	return OK;	
+}
+
+ADTErr VectorGet(vector_t* _vector, size_t _index, int* _item)
+{
+	if ((NULL == _vector) || (NULL == _item)) 
+	{
+		return POINTER_ERROR;
+	}
+	if ((_index < 1) || (_index > _vector->m_nItems))
+	{
+		return INDEX_ERROR;
+	}
+	*_item = _vector->m_items[_index - 1];
+
+	return OK;
+}
+
+ADTErr VectorSet(vector_t* _vector, size_t _index, int _item)
+{
+	if (NULL == _vector) 
+	{
+		return POINTER_ERROR;
+	}
+	if ((_index < 1) || (_index > _vector->m_nItems))
+	{
+		return INDEX_ERROR;
+	}
+
+	_vector->m_items[_index - 1] = _item;
 
 	return OK;
 }

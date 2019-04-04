@@ -12,6 +12,8 @@ typedef enum
 {
 	OK = 0,
 	GENERAL_ERROR,
+	PARAMETER_ERROR,
+	POINTER_ERROR,
 	INITIALIZATION_ERROR,
 	ALLOCATION_ERROR,
 	REALLOCATION_ERROR,
@@ -52,22 +54,29 @@ extern ADTErr VectorAdd(vector_t *_vector, int _item);
 	Input: Pointer to vector_t, and a pointer to int to hold the deleted item's data.
 	Output: vector->m_nItems is decremented, and the previously top item's
 			data is placed in _item.
-	Errors\Return: ADTErr values.
+	Errors\Return: PARAMETER_ERROR, OK.
 */
 extern ADTErr VectorDelete(vector_t *_vector, int* _item);
 
 /*
+	Description: Retrieves the data at _index in _vector into *_item.
+	Input: A pointer to vector_t, an index, and a pointer to int.
+	Errors\Return: POINTER_ERROR, INDEX_ERROR, OK.
 */
 extern ADTErr VectorGet(vector_t* _vector, size_t _index, int* _item);
 
-
+/*
+	Description: Sets the data at _index in _vector from _item.
+	Input: A pointer to vector_t, an index, and an integer.
+	Errors\Return: POINTER_ERROR, INDEX_ERROR, OK.
+*/
 extern ADTErr VectorSet(vector_t* _vector, size_t _index, int _item);
 
 /*
 	Description: Gets the number of items in the vector _vector.
 	Input: Pointer to vector_t, and a pointer to int to hold vector->m_nItems.
 	Output: _vector->m_nItems is copied to _numOfItems.
-	Errors\Return: ADTErr values.
+	Errors\Return: POINTER_ERROR, INDEX_ERROR, OK.
 */
 extern ADTErr VectorItemsNum(vector_t* _vector, int* _numOfItems);
 
