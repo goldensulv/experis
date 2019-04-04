@@ -31,6 +31,11 @@ calendar_t* ADCreate(Uint _size)
 
 void ADDestroy(calendar_t* _diary)
 {
+	while (_diary->m_numOfMeetings > 0)
+	{
+		MeetingDestroy(_diary->m_entries[_diary->m_numOfMeetings - 1]);
+		(_diary->m_numOfMeetings)--;
+	}
 	free(_diary->m_entries);
 	free(_diary);
 }
@@ -176,6 +181,11 @@ enum status ADRemove(calendar_t *_diary, float _start_time)
 {
 	Uint index = 0;
 
+	if (NULL == _diary)
+	{
+		return PARAM_ERROR;
+	}
+
 	meeting_t *meeting = ADFind(_diary, _start_time, &index);
 	if (NULL != meeting)
 	{
@@ -194,6 +204,7 @@ enum status ADRemove(calendar_t *_diary, float _start_time)
 void ADPrint(calendar_t *_diary)
 {
 	Uint appointments = 0;
+
 	if (NULL == _diary)
 	{
 		return;

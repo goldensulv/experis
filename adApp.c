@@ -21,9 +21,6 @@ int main(void)
 	Uint size = 0;
 
 	meeting_t *meeting = NULL;
-	meeting_t *appointment = NULL;
-	meeting_t *rendevous = NULL;
-	meeting_t *sit_down = NULL;
 	calendar_t *calendar = NULL;
 
 	while (6 != option)
@@ -80,6 +77,8 @@ int main(void)
 			}
 			case (6):
 			{
+				ADDestroy(calendar);
+				calendar = NULL;				
 				break;
 			}
 			default:
