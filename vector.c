@@ -2,7 +2,7 @@
 	Title:			vector.c
 	Description:	Dynamic Vector ADT
 	Author:			Shalev Goldfarb
-	Last updated:	04.04.19
+	Last updated:	06.04.19
 */
 
 #include <stdlib.h>
@@ -38,7 +38,6 @@ void VectorDestroy(vector_t* _vector)
 	{
 		return;
 	}
-
 	free(_vector->m_items);
 	free(_vector);
 }
@@ -50,6 +49,11 @@ static ADTErr VectorRealloc(vector_t* _vector)
 	if ((NULL == _vector) || (NULL == _vector->m_items))
 	{
 		return ALLOCATION_ERROR;
+	}
+
+	if (0 == _vector->m_blockSize)
+	{
+		return OVERFLOW_ERROR;
 	}
 
 	temp = (int*)realloc(_vector->m_items, _vector->m_size + _vector->m_blockSize);
@@ -68,7 +72,7 @@ ADTErr VectorAdd(vector_t* _vector, int _item)
 	int status = OK;
 	if (NULL == _vector)
 	{
-		return PARAMETER_ERROR;
+		return POINTER_ERROR;
 	}
 
 	if (_vector->m_nItems == _vector->m_size)
@@ -83,7 +87,7 @@ ADTErr VectorAdd(vector_t* _vector, int _item)
 	}
 	else
 	{
-		return REALLOCATION_ERROR;
+		return status;
 	}
 
 	return status;
@@ -94,10 +98,14 @@ ADTErr VectorDelete(vector_t* _vector, int* _item)
 {
 	if ((NULL == _vector) || (NULL == _item))
 	{
-		return PARAMETER_ERROR;
+		return POINTER_ERROR;
 	}
 
-	if (_vector->m_nItems > 0)
+	if (0 == _vector->m_nItems)
+	{
+		return UNDERFLOW_ERROR;
+	}
+	else
 	{
 		*_item = _vector->m_items[_vector->m_nItems - 1];
 		_vector->m_items[_vector->m_nItems - 1] = 0;

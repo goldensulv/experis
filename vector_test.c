@@ -2,7 +2,7 @@
 	Title:			vector_test.c
 	Description:	Dynamic Vector ADT - test file
 	Author:			Shalev Goldfarb
-	Last updated:	04.04.19
+	Last updated:	06.04.19
 */
 
 #include <stdio.h>
@@ -11,46 +11,313 @@
 
 #define LOG_ERROR(s)    (strcpy(errors[index], s))
 
-void VectorPrint(vector_t* _vector);
-void PrintErrors(char* test);
+#define ITEM_DEFAULT 5
 
-char errors[10][30] = {0};
+void TestVectorCreate(void);
+void TestVectorAdd(void);
+void TestVectorDelete(void);
+void TestVectorGet(void);
+void TestVectorSet(void);
+void TestVectorItemsNum(void);
+void VectorPrint(vector_t* _vector);
+void PrintErrors(char* _moduleName);
+
+char errors[20][30] = {0};
 unsigned short total = 0;
 unsigned short passed = 0;
 unsigned short index = 1;
 
 int main(void)
 {
-	int item, itemsNum;
-	vector_t* vector = VectorCreate(4, 4);
-	VectorAdd(vector, 16);
-	VectorAdd(vector, 53);
-	VectorDelete(vector, &item);
-	printf("%d\n", item);
-	VectorAdd(vector, 4);
-	VectorAdd(vector, 81);
-	VectorAdd(vector, 934);
-	VectorAdd(vector, 9);
-	VectorAdd(vector, 33);
-	VectorPrint(vector);
-	VectorItemsNum(vector, &itemsNum);
-	printf("%d\n", itemsNum);
-	VectorGet(vector, 3, &item);
-	printf("%d\n", item);	
-	item = 77;
-	VectorSet(vector, 3, item);
-	VectorPrint(vector);
-	VectorDestroy(vector);
+	TestVectorCreate();
+	TestVectorAdd();
+	TestVectorDelete();
+	TestVectorGet();
+	TestVectorSet();
+	TestVectorItemsNum();
+	PrintErrors("Vector");
 
 	return 0;
 }
 
+void TestVectorCreate(void)
+{
+	vector_t* vector = VectorCreate(4, 4);
+	total++;
+	if (NULL == vector)
+	{
+		LOG_ERROR("TestVectorCreate - 1");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+
+	total++;
+	vector = VectorCreate(99999999999, 3);
+	if (NULL != vector)
+	{
+		LOG_ERROR("TestVectorCreate - 2");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);	
+	index++;
+}
+
+void TestVectorAdd(void)
+{
+	int status = 0;
+	vector_t* vector = VectorCreate(4, 4);
+	status = VectorAdd(vector, ITEM_DEFAULT);
+	total++;
+	if (OK != status)
+	{
+		LOG_ERROR("TestVectorAdd - 1");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+
+	vector = VectorCreate(1, 0);
+	VectorAdd(vector, ITEM_DEFAULT);
+	status = VectorAdd(vector, ITEM_DEFAULT);
+	total++;
+	if (OVERFLOW_ERROR != status)
+	{
+		LOG_ERROR("TestVectorAdd - 2");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+
+	total++;
+	status = 0;
+	vector = VectorCreate(0, 999999999999);
+	status = VectorAdd(vector, ITEM_DEFAULT);
+	if (REALLOCATION_ERROR != status)
+	{
+		LOG_ERROR("TestVectorAdd - 3");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);	
+	vector = NULL;
+	index++;
+
+	total++;
+	status = VectorAdd(vector, ITEM_DEFAULT);
+	if (POINTER_ERROR != status)
+	{
+		LOG_ERROR("TestVectorAdd - 4");
+	}
+	else
+	{
+		passed++;
+	}
+	index++;
+}
+
+void TestVectorDelete(void)
+{
+	int status = 0;
+	int item = 0;
+	vector_t* vector = VectorCreate(4, 4);
+	VectorAdd(vector, ITEM_DEFAULT);
+	status = VectorDelete(vector, &item);
+	total++;
+	if ((OK != status) || (ITEM_DEFAULT != item))
+	{
+		LOG_ERROR("TestVectorDelete - 1");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+
+	total++;
+	status = VectorDelete(vector, &item);
+	if (POINTER_ERROR != status)
+	{
+		LOG_ERROR("TestVectorDelete - 2");
+	}
+	else
+	{
+		passed++;
+	}
+	index++;
+
+	total++;
+	vector = VectorCreate(4, 4);
+	status = VectorDelete(vector, &item);
+	if (UNDERFLOW_ERROR != status)
+	{
+		LOG_ERROR("TestVectorDelete - 3");
+	}
+	else
+	{
+		passed++;
+	}
+	index++;
+}
+
+void TestVectorGet(void)
+{
+	int status = 0;
+	int item = 0;
+	vector_t* vector = VectorCreate(4, 4);
+	VectorAdd(vector, ITEM_DEFAULT);
+	status = VectorGet(vector, 1, &item);
+	total++;
+	if ((OK != status) || (ITEM_DEFAULT != item))
+	{
+		LOG_ERROR("TestVectorGet - 1");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+
+	total++;
+	status = 0;
+	item = 0;
+	vector = VectorCreate(4, 4);
+	status = VectorGet(vector, 1, &item);
+	if ((INDEX_ERROR != status) || (0 != item))
+	{
+		LOG_ERROR("TestVectorGet - 2");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;	
+
+	total++;
+	status = 0;
+	item = 0;
+	status = VectorGet(vector, 1, NULL);
+	if (POINTER_ERROR != status)
+	{
+		LOG_ERROR("TestVectorGet - 3");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;	
+}
+
+void TestVectorSet(void)
+{
+	int status = 0;
+	int item = 10;
+	vector_t* vector = VectorCreate(4, 4);
+	VectorAdd(vector, ITEM_DEFAULT);
+	status = VectorSet(vector, 1, item);
+	VectorGet(vector, 1, &item);
+	total++;
+	if ((OK != status) || (10 != item))
+	{
+		LOG_ERROR("TestVectorSet - 1");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+
+	total++;
+	status = 0;
+	item = 0;
+	vector = VectorCreate(4, 4);
+	VectorAdd(vector, ITEM_DEFAULT);
+	status = VectorSet(vector, 2, item);
+	if (INDEX_ERROR != status)
+	{
+		LOG_ERROR("TestVectorSet - 2");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;	
+
+	total++;
+	status = 0;
+	item = 0;
+	status = VectorSet(vector, 1, ITEM_DEFAULT);
+	if (POINTER_ERROR != status)
+	{
+		LOG_ERROR("TestVectorSet - 3");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+}
+
+void TestVectorItemsNum(void)
+{
+	int status = 0;
+	int numOfItems = 0;
+	vector_t* vector = VectorCreate(4, 4);
+	VectorAdd(vector, ITEM_DEFAULT);
+	VectorAdd(vector, ITEM_DEFAULT);
+	VectorAdd(vector, ITEM_DEFAULT);
+	status = VectorItemsNum(vector, &numOfItems);
+	total++;
+	if ((OK != status) || (3 != numOfItems))
+	{
+		LOG_ERROR("TestVectorItemsNum - 1");
+	}
+	else
+	{
+		passed++;
+	}
+	VectorDestroy(vector);
+	vector = NULL;
+	index++;
+}
+
 void VectorPrint(vector_t* _vector)
 {
-	int index = 0;
+	size_t index = 0;
 	while (index < (_vector->m_nItems))
 	{
-		printf("At index %d, there lies the number %d\n", index + 1, _vector->m_items[index]);
+		printf("At index %lu, there lies the number %d\n", index + 1, _vector->m_items[index]);
 		index++;
 	}
 }
