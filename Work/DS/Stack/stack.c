@@ -69,6 +69,7 @@ ADTErr StackTop(const stack_t* _stack, int* _item)
 
 int StackIsEmpty(const stack_t* _stack)
 {
+	int numOfItems = -1;
 	int status = FALSE;
 
 	if (NULL == _stack)
@@ -76,7 +77,8 @@ int StackIsEmpty(const stack_t* _stack)
 		return status;
 	}
 
-	if (0 == _stack->m_vector->m_nItems)
+	VectorItemsNum(_stack->m_vector, &numOfItems);
+	if (0 == numOfItems)
 	{
 		status = TRUE;
 	}

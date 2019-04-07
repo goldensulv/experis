@@ -127,10 +127,7 @@ ADTErr VectorItemsNum(const vector_t* _vector, int* _numOfItems)
 		return POINTER_ERROR;
 	}
 
-	if (_vector->m_nItems > 0)
-	{
-		*_numOfItems = _vector->m_nItems;
-	}
+	*_numOfItems = _vector->m_nItems;
 
 	return OK;	
 }

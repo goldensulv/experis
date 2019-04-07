@@ -10,6 +10,8 @@
 
 #include "ADTErr.h"
 
+#define EOS '\0'
+
 typedef struct vector
 {
 	size_t m_magicNumber;
