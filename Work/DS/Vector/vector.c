@@ -4,7 +4,7 @@
 	Author:			Shalev Goldfarb
 	Last updated:	06.04.19
 */
-
+#include <stdio.h>
 #include <stdlib.h>
 #include "vector.h"
 
@@ -120,7 +120,7 @@ ADTErr VectorDelete(vector_t* _vector, int* _item)
 	return OK;
 }
 
-ADTErr VectorItemsNum(vector_t* _vector, int* _numOfItems)
+ADTErr VectorItemsNum(const vector_t* _vector, int* _numOfItems)
 {
 	if ((NULL == _vector) || (0xbeefbeef != _vector->m_magicNumber) || (NULL == _numOfItems))
 	{
@@ -135,7 +135,7 @@ ADTErr VectorItemsNum(vector_t* _vector, int* _numOfItems)
 	return OK;	
 }
 
-ADTErr VectorGet(vector_t* _vector, size_t _index, int* _item)
+ADTErr VectorGet(const vector_t* _vector, size_t _index, int* _item)
 {
 	if ((NULL == _vector) || (0xbeefbeef != _vector->m_magicNumber) || (NULL == _item)) 
 	{
@@ -164,4 +164,18 @@ ADTErr VectorSet(vector_t* _vector, size_t _index, int _item)
 	_vector->m_items[_index - 1] = _item;
 
 	return OK;
+}
+
+void VectorPrint(const vector_t* _vector)
+{
+	size_t index = 0;
+	if (NULL == _vector)
+	{
+		return;
+	}
+	while (index < (_vector->m_nItems))
+	{
+		printf("At index %lu, there lies the number %d\n", index + 1, _vector->m_items[index]);
+		index++;
+	}
 }

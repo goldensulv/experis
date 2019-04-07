@@ -19,7 +19,6 @@ void TestVectorDelete(void);
 void TestVectorGet(void);
 void TestVectorSet(void);
 void TestVectorItemsNum(void);
-void VectorPrint(vector_t* _vector);
 void PrintErrors(char* _moduleName);
 
 char errors[20][30] = {0};
@@ -310,20 +309,6 @@ void TestVectorItemsNum(void)
 	VectorDestroy(vector);
 	vector = NULL;
 	index++;
-}
-
-void VectorPrint(vector_t* _vector)
-{
-	size_t index = 0;
-	if (NULL == _vector)
-	{
-		return;
-	}
-	while (index < (_vector->m_nItems))
-	{
-		printf("At index %lu, there lies the number %d\n", index + 1, _vector->m_items[index]);
-		index++;
-	}
 }
 
 /* Error handling */

@@ -21,8 +21,8 @@ typedef struct vector
 } vector_t;
 
 /*
-	Description: Creates a vector with initial size of _initialSize.
-	Errors\Return: ADTErr values.
+	Description: Creates a vector with initial size of _initialSize, and blockSize of _extentionBlockSize.
+	Errors\Return: NULL on failure, pointer to vector_t on success.
 */
 extern vector_t* VectorCreate(size_t _initialSize, size_t _extentionBlockSize);
 
@@ -52,7 +52,7 @@ extern ADTErr VectorDelete(vector_t* _vector, int* _item);
 	Input: A pointer to vector_t, an index (starting at 1), and a pointer to int.
 	Errors\Return: POINTER_ERROR, INDEX_ERROR, OK.
 */
-extern ADTErr VectorGet(vector_t* _vector, size_t _index, int* _item);
+extern ADTErr VectorGet(const vector_t* _vector, size_t _index, int* _item);
 
 /*
 	Description: Sets the data at _index in _vector from _item.
@@ -67,6 +67,8 @@ extern ADTErr VectorSet(vector_t* _vector, size_t _index, int _item);
 	Output: _vector->m_nItems is copied to _numOfItems.
 	Errors\Return: POINTER_ERROR, INDEX_ERROR, OK.
 */
-extern ADTErr VectorItemsNum(vector_t* _vector, int* _numOfItems);
+extern ADTErr VectorItemsNum(const vector_t* _vector, int* _numOfItems);
+
+extern void VectorPrint(const vector_t* _vector);
 
 #endif /* __VECTOR_H__ */
