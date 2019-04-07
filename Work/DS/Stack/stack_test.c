@@ -17,6 +17,7 @@ void TestStackPush(void);
 void TestStackPop(void);
 void TestStackTop(void);
 void TestStackIsEmpty(void);
+void CheckParentheses(char* _str);
 void PrintErrors(char* _moduleName);
 
 char errors[20][30] = {0};
@@ -26,6 +27,7 @@ unsigned short index = 1;
 
 int main(void)
 {
+	char str[] = "[()]";
 	TestStackCreate();
 	TestStackPush();
 	TestStackPop();
@@ -172,6 +174,11 @@ void TestStackIsEmpty(void)
 	}
 	StackDestroy(stack);
 	index++;
+}
+
+void CheckParentheses(char* _str)
+{
+
 }
 
 void StackPrint(stack_t* _stack)

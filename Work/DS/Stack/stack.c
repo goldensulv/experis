@@ -22,12 +22,6 @@ stack_t* StackCreate(size_t _size, size_t _blockSize)
 		return NULL;
 	}
 
-	stack->m_vector->m_magicNumber = 0xbeefbeef;
-	stack->m_vector->m_originalSize = _size;
-	stack->m_vector->m_size = _size;
-	stack->m_vector->m_nItems = 0;
-	stack->m_vector->m_blockSize = _blockSize;
-
 	return stack;
 }
 
@@ -81,7 +75,7 @@ int StackIsEmpty(const stack_t* _stack)
 	{
 		return status;
 	}
-	
+
 	if (0 == _stack->m_vector->m_nItems)
 	{
 		status = TRUE;
