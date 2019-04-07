@@ -24,6 +24,7 @@ vector_t* VectorCreate(size_t _initialSize, size_t _extentionBlockSize)
 		return vector;
 	}
 
+	vector->m_magicNumber = 0xbeefbeef;
 	vector->m_originalSize = _initialSize;
 	vector->m_size = _initialSize;
 	vector->m_nItems = 0;
@@ -37,6 +38,10 @@ void VectorDestroy(vector_t* _vector)
 	if (NULL == _vector)
 	{
 		return;
+	}
+	if (0xbeefbeef == _vector->m_magicNumber)
+	{
+		_vector->m_magicNumber = 0xdeadbeef;
 	}
 	free(_vector->m_items);
 	free(_vector);
@@ -70,7 +75,7 @@ static ADTErr VectorRealloc(vector_t* _vector)
 ADTErr VectorAdd(vector_t* _vector, int _item)
 {
 	int status = OK;
-	if (NULL == _vector)
+	if ((NULL == _vector) || (0xbeefbeef != _vector->m_magicNumber))
 	{
 		return POINTER_ERROR;
 	}
@@ -96,7 +101,7 @@ ADTErr VectorAdd(vector_t* _vector, int _item)
 
 ADTErr VectorDelete(vector_t* _vector, int* _item)
 {
-	if ((NULL == _vector) || (NULL == _item))
+	if ((NULL == _vector) || (0xbeefbeef != _vector->m_magicNumber) || (NULL == _item))
 	{
 		return POINTER_ERROR;
 	}
@@ -117,7 +122,7 @@ ADTErr VectorDelete(vector_t* _vector, int* _item)
 
 ADTErr VectorItemsNum(vector_t* _vector, int* _numOfItems)
 {
-	if ((NULL == _vector) || (NULL == _numOfItems))
+	if ((NULL == _vector) || (0xbeefbeef != _vector->m_magicNumber) || (NULL == _numOfItems))
 	{
 		return POINTER_ERROR;
 	}
@@ -132,7 +137,7 @@ ADTErr VectorItemsNum(vector_t* _vector, int* _numOfItems)
 
 ADTErr VectorGet(vector_t* _vector, size_t _index, int* _item)
 {
-	if ((NULL == _vector) || (NULL == _item)) 
+	if ((NULL == _vector) || (0xbeefbeef != _vector->m_magicNumber) || (NULL == _item)) 
 	{
 		return POINTER_ERROR;
 	}
@@ -147,7 +152,7 @@ ADTErr VectorGet(vector_t* _vector, size_t _index, int* _item)
 
 ADTErr VectorSet(vector_t* _vector, size_t _index, int _item)
 {
-	if (NULL == _vector) 
+	if ((NULL == _vector) || (0xbeefbeef != _vector->m_magicNumber))
 	{
 		return POINTER_ERROR;
 	}

@@ -8,22 +8,11 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
-typedef enum 
-{
-	OK = 0,
-	GENERAL_ERROR,
-	PARAMETER_ERROR,
-	POINTER_ERROR,
-	INITIALIZATION_ERROR,
-	ALLOCATION_ERROR,
-	REALLOCATION_ERROR,
-	UNDERFLOW_ERROR,
-	OVERFLOW_ERROR,
-	INDEX_ERROR
-} ADTErr;
+#include "ADTErr.h"
 
 typedef struct vector
 {
+	size_t m_magicNumber;
 	size_t m_originalSize;
 	size_t m_size;
 	size_t m_nItems;
