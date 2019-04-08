@@ -119,6 +119,10 @@ ADTErr VectorDelete(vector_t* _vector, int* _item)
 	{
 		return UNDERFLOW_ERROR;
 	}
+	else if (_vector->m_nItems <= (_vector->m_items / 4))
+	{
+		
+	}
 	else
 	{
 		*_item = _vector->m_items[_vector->m_nItems - 1];

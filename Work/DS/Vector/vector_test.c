@@ -34,6 +34,7 @@ int main(void)
 	TestVectorGet();
 	TestVectorSet();
 	TestVectorItemsNum();
+	
 	PrintErrors("Vector");
 
 	return 0;
