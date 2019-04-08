@@ -8,17 +8,14 @@
 #ifndef __STACK_H__
 #define __STACK_H__
 
-#include "vector.h"
 #include "ADTErr.h"
 
 #define FALSE 0
 #define TRUE 1
 #define ERROR -1
+#define EOS '\0'
 
-typedef struct stack
-{
-	vector_t* m_vector;
-} stack_t;
+typedef struct stack stack_t;
 
 /*
 	Description: Creates a stack with an initial size of _size and blockSize of _blockSize.
@@ -54,5 +51,7 @@ extern ADTErr StackTop(const stack_t* _stack, int* _item);
 	Errors\Return: TRUE if empty, FALSE if not-empty, and ERROR for error.
 */
 extern int StackIsEmpty(const stack_t* _stack);
+
+extern void StackPrint(const stack_t* _stack);
 
 #endif /* __STACK_H__ */

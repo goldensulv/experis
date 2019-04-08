@@ -11,7 +11,6 @@
 #define LOG_ERROR(s)    (strcpy(errors[index], s))
 #define ITEM_DEFAULT 5
 
-void StackPrint(stack_t* _stack);
 void TestStackCreate(void);
 void TestStackPush(void);
 void TestStackPop(void);
@@ -172,11 +171,6 @@ void TestStackIsEmpty(void)
 	}
 	StackDestroy(stack);
 	index++;
-}
-
-void StackPrint(stack_t* _stack)
-{
-	VectorPrint(_stack->m_vector);
 }
 
 /* Error handling */

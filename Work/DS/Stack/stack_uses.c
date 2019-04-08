@@ -14,8 +14,8 @@ int IsParenthesesOK(char* _str);
 
 int main(void)
 {
-	char source[] = "{[({})]}";
-	char infix[] = "(4+6)*3";
+	char source[] = "({[({})]}";
+	char infix[] = "(4+6)*3+4*(2+5)";
 	char* result = NULL;
 	printf("%s\n", source);
 	(IsParenthesesOK(source)) ? (puts("Nice")) : (puts("Bad sequence"));
@@ -58,13 +58,10 @@ char* InfixToPostfix(char* _str)
 			while (0 == status)
 			{
 				StackTop(stack, &stackTop);
-				if ((stackTop >= '*') && (stackTop <= '/'))
+				if ( ((*pntr_str == '*') || (*pntr_str == '/')) && ((stackTop == '+') || (stackTop == '-')) )
 				{
-					if (((*pntr_str == '*') || (*pntr_str == '/')) && ((stackTop == '+') || (stackTop == '-')))
-					{
-						StackPush(stack, *pntr_str);
-						status = 1;
-					}
+					StackPush(stack, *pntr_str);
+					status = 1;
 				}
 				else if ((stackTop == '(') || (StackIsEmpty(stack)))
 				{

@@ -12,15 +12,7 @@
 
 #define EOS '\0'
 
-typedef struct vector
-{
-	size_t m_magicNumber;
-	size_t m_originalSize;
-	size_t m_size;
-	size_t m_nItems;
-	size_t m_blockSize;
-	int* m_items;
-} vector_t;
+typedef struct vector vector_t;
 
 /*
 	Description: Creates a vector with initial size of _initialSize, and blockSize of _extentionBlockSize.

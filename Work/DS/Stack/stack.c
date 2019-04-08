@@ -6,6 +6,12 @@
 */
 #include <stdlib.h> /* malloc */
 #include "stack.h"
+#include "vector.h"
+
+struct stack
+{
+	vector_t* m_vector;
+};
 
 stack_t* StackCreate(size_t _size, size_t _blockSize)
 {
@@ -27,11 +33,10 @@ stack_t* StackCreate(size_t _size, size_t _blockSize)
 
 void StackDestroy(stack_t* _stack)
 {
-	if ((NULL == _stack) || (0xbeefbeef != _stack->m_vector->m_magicNumber))
+	if ((NULL == _stack))
 	{
 		return;
 	}
-	_stack->m_vector->m_magicNumber = 0xdeadbeef;
 	VectorDestroy(_stack->m_vector);
 	free(_stack);
 }
@@ -47,7 +52,7 @@ ADTErr StackPush(stack_t* _stack, int _item)
 
 ADTErr StackPop(stack_t* _stack, int* _item)
 {
-	if ((NULL == _stack) || (NULL == _item))
+	if (NULL == _stack)
 	{
 		return POINTER_ERROR;
 	}
@@ -84,4 +89,9 @@ int StackIsEmpty(const stack_t* _stack)
 	}
 
 	return status;
+}
+
+void StackPrint(const stack_t* _stack)
+{
+	VectorPrint(_stack->m_vector);
 }
