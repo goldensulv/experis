@@ -176,6 +176,7 @@ void TestVectorDelete(void)
 	{
 		passed++;
 	}
+	VectorDestroy(vector);
 	index++;
 }
 

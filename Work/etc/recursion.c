@@ -8,34 +8,56 @@
 int Fibonacci(int _num);
 int IsPalindrom(char* _str, int _start, int _end);
 int FindMaxInArr(int* _arr, int _start, int _end);
-void Hanoi(stack_t* _from, stack_t* _to, stack_t* _via);
+void HanoiTowers(int _numOfRings, stack_t* _from, stack_t* _to, stack_t* _via);
 
 int main(void)
 {
-	stack_t* from = NULL, to = NULL, via = NULL;
-	char str[] = "sabgbas";
+	int i;
+	stack_t* from;
+	stack_t* to;
+	stack_t* via;
+	char palidrom_str[] = "sabgbas";
 	int arr[] = {5, 14, 3, 86, 53, 11, 2, 87};
-	int len = strlen(str);
-	printf("%d\n", Fibonacci(6));
-	(IsPalindrom(str, 0, len - 1)) ? (puts("Its a palindrom")) : (puts("Not a palindrom"));
+	int len = strlen(palindrom_str);
+	/* Fibonacci */
+	printf("%d\n", Fibonacci(36));
+	
+	/* IsPalindrom */
+	(IsPalindrom(palidrom_str, 0, len - 1)) ? (puts("Its a palindrom")) : (puts("Not a palindrom"));
+
+	/* FindMaxInArr */
 	len = sizeof(arr)/sizeof(arr[0]);
 	printf("Max num: %d\n", FindMaxInArr(arr, 0, len - 1));
-	from = StackCreate(10,1);
-	to = StackCreate(10,1);
-	via = StackCreate(10,1);
+
+	/* HanoiTowers */
+	from = StackCreate(32,1);
+	to = StackCreate(32,1);
+	via = StackCreate(32,1);
+	i = 1;
+	while (i < 10)
+	{
+		StackPush(from, 10 - i);
+		i++;
+	}
+	HanoiTowers(9, from, to, via);
+	StackPrint(to);
+
+	StackDestroy(from);
+	StackDestroy(to);
+	StackDestroy(via);
 
 	return 0;
 }
 
 int Fibonacci(int _num)
 {
-	if (_num > 2)
+	if (_num <= 2)
 	{
-		return Fibonacci(_num - 1) + Fibonacci(_num - 2);
+		return 1;
 	}
 	else
 	{
-		return 1;
+		return Fibonacci(_num - 1) + Fibonacci(_num - 2);
 	}
 }
 
@@ -45,13 +67,13 @@ int IsPalindrom(char* _str, int _start, int _end)
 	{
 		return TRUE;
 	}
-	if (_str[_start] == _str[_end])
+	if (_str[_start] != _str[_end])
 	{
-		return IsPalindrom(_str, _start + 1, _end - 1);
+		return FALSE;
 	}
 	else
 	{
-		return FALSE;
+		return IsPalindrom(_str, _start + 1, _end - 1);
 	}
 }
 
@@ -68,7 +90,7 @@ int FindMaxInArr(int* _arr, int _start, int _end)
 			return _arr[_end];
 		}
 	}
-	if (_arr[_start] >= _arr[_end])
+	else if (_arr[_start] >= _arr[_end])
 	{
 		_end--;
 	}
@@ -80,11 +102,18 @@ int FindMaxInArr(int* _arr, int _start, int _end)
 	return FindMaxInArr(_arr, _start, _end);
 }
 
-void Hanoi(stack_t* _from, stack_t* _to, stack_t* _via)
+void HanoiTowers(int _numOfRings, stack_t* _from, stack_t* _to, stack_t* _via)
 {
-	if ((0 == _from) && (0 == _via))
+	int ring = 0;
+	if (1 == _numOfRings)
 	{
-		printf("%d , %d , %d\n", _from, _to, _via);
+		StackPop(_from, &ring);
+		StackPush(_to, ring);
 	}
-
-}
+	else
+	{
+		HanoiTowers(_numOfRings - 1,  _from, _via, _to);
+		HanoiTowers(1, _from, _to, _via);
+		HanoiTowers(_numOfRings - 1, _via, _to, _from);
+	}
+} 

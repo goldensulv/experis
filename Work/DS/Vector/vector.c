@@ -56,7 +56,7 @@ void VectorDestroy(vector_t* _vector)
 	free(_vector);
 }
 
-static ADTErr VectorRealloc(vector_t* _vector)
+static ADTErr VectorRealloc(vector_t* _vector, int _upOrDown)
 {
 	int* temp;
 
@@ -70,7 +70,7 @@ static ADTErr VectorRealloc(vector_t* _vector)
 		return OVERFLOW_ERROR;
 	}
 
-	temp = (int*)realloc(_vector->m_items, _vector->m_size + _vector->m_blockSize);
+	temp = (int*)realloc(_vector->m_items, _vector->m_size + (_vector->m_blockSize * _upOrDown));
 	if (NULL == temp)
 	{
 		return REALLOCATION_ERROR;
@@ -91,7 +91,7 @@ ADTErr VectorAdd(vector_t* _vector, int _item)
 
 	if (_vector->m_nItems == _vector->m_size)
 	{
-		status = VectorRealloc(_vector);
+		status = VectorRealloc(_vector, +1);
 	}
 
 	if (OK == status)
@@ -110,27 +110,28 @@ ADTErr VectorAdd(vector_t* _vector, int _item)
 
 ADTErr VectorDelete(vector_t* _vector, int* _item)
 {
+	int status = OK;
 	if ((NULL == _vector) || (MAGIC_NUMBER != _vector->m_magicNumber) || (NULL == _item))
 	{
-		return POINTER_ERROR;
+		status = POINTER_ERROR;
 	}
-
-	if (0 == _vector->m_nItems)
+	else if (0 == _vector->m_nItems)
 	{
-		return UNDERFLOW_ERROR;
+		status = UNDERFLOW_ERROR;
 	}
-	else if (_vector->m_nItems <= (_vector->m_items / 4))
+	else if ((_vector->m_nItems <= (_vector->m_size / 4)) && 
+			(((int)_vector->m_nItems - (int)_vector->m_blockSize) >= (int)_vector->m_originalSize))
 	{
-		
+		status = VectorRealloc(_vector, -1);
 	}
-	else
+	if (OK == status)
 	{
 		*_item = _vector->m_items[_vector->m_nItems - 1];
 		_vector->m_items[_vector->m_nItems - 1] = 0;
 		(_vector->m_nItems)--;
 	}
 
-	return OK;
+	return status;
 }
 
 ADTErr VectorItemsNum(const vector_t* _vector, int* _numOfItems)
