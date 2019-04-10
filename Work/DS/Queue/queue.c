@@ -117,15 +117,36 @@ ADTErr QueueRemove(queue_t* _queue, int* _item)
 
 int QueueIsEmpty(const queue_t* _queue)
 {
+	if ((NULL == _queue) || (_queue->m_magicNumber != MAGIC_NUMBER))
+	{
+		return 0;
+	}
 	return (0 == _queue->m_nItems);
 }
 
 void QueuePrint(const queue_t* _queue)
 {
 	int i = 0;
-	while (i < _queue->m_nItems)
+	int head;
+
+	if (NULL == _queue)
 	{
-		printf("%d\n", _queue->m_items[i]);
+		return;
+	}
+	head = _queue->m_head;
+	while ((i < _queue->m_nItems) && (head != _queue->m_tail))
+	{
+		printf("Item #%d - %d\n", i+1, _queue->m_items[head]);
+		if (_queue->m_head == (_queue->m_size - 1))
+		{
+			head = 0;
+		}
+		else
+		{
+			head++;
+		}
 		i++;
 	}
+
+	return;
 }
