@@ -16,14 +16,15 @@ int main(void)
 	stack_t* from;
 	stack_t* to;
 	stack_t* via;
-	char palidrom_str[] = "sabgbas";
+	char palindrom_str[] = "sabgbas";
 	int arr[] = {5, 14, 3, 86, 53, 11, 2, 87};
 	int len = strlen(palindrom_str);
+
 	/* Fibonacci */
 	printf("%d\n", Fibonacci(36));
 	
 	/* IsPalindrom */
-	(IsPalindrom(palidrom_str, 0, len - 1)) ? (puts("Its a palindrom")) : (puts("Not a palindrom"));
+	(IsPalindrom(palindrom_str, 0, len - 1)) ? (puts("Its a palindrom")) : (puts("Not a palindrom"));
 
 	/* FindMaxInArr */
 	len = sizeof(arr)/sizeof(arr[0]);
@@ -34,12 +35,12 @@ int main(void)
 	to = StackCreate(32,1);
 	via = StackCreate(32,1);
 	i = 1;
-	while (i < 10)
+	while (i < 26)
 	{
-		StackPush(from, 10 - i);
+		StackPush(from, 26 - i);
 		i++;
 	}
-	HanoiTowers(9, from, to, via);
+	HanoiTowers(25, from, to, via);
 	StackPrint(to);
 
 	StackDestroy(from);
@@ -104,7 +105,7 @@ int FindMaxInArr(int* _arr, int _start, int _end)
 
 void HanoiTowers(int _numOfRings, stack_t* _from, stack_t* _to, stack_t* _via)
 {
-	int ring = 0;
+	static int ring = 0;
 	if (1 == _numOfRings)
 	{
 		StackPop(_from, &ring);
