@@ -75,16 +75,9 @@ ADTErr QueueInsert(queue_t* _queue, const int _item)
 		return OVERFLOW_ERROR;
 	}
 
-	_queue->m_items[_queue->m_tail] = _item;
+	_queue->m_items[_queue->m_tail++] = _item;
 	_queue->m_nItems++;
-	if (_queue->m_tail == (_queue->m_size - 1))
-	{
-		_queue->m_tail = 0;
-	}
-	else
-	{
-		_queue->m_tail++;
-	}
+	_queue->m_tail %= _queue->m_size;
 
 	return OK;
 }
@@ -101,16 +94,9 @@ ADTErr QueueRemove(queue_t* _queue, int* _item)
 		return UNDERFLOW_ERROR;
 	}
 
-	*_item = _queue->m_items[_queue->m_head];
+	*_item = _queue->m_items[_queue->m_head++];
 	_queue->m_nItems--;
-	if (_queue->m_head == (_queue->m_size - 1))
-	{
-		_queue->m_head = 0;
-	}
-	else
-	{
-		_queue->m_head++;
-	}
+	_queue->m_head %= _queue->m_size;
 
 	return OK;
 }
