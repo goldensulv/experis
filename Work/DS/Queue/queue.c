@@ -129,7 +129,7 @@ void QueuePrint(const queue_t* _queue)
 	int i = 0;
 	int head;
 
-	if (NULL == _queue)
+	if ((NULL == _queue) || (_queue->m_magicNumber != MAGIC_NUMBER))
 	{
 		return;
 	}
