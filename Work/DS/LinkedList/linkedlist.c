@@ -2,7 +2,7 @@
 	Title:			linkedlist.c
 	Description:	Linked List ADT
 	Author:			Shalev Goldfarb
-	Last updated:	10.04.19
+	Last updated:	11.04.19
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +19,7 @@ struct person
 
 person_t* ListInsertHead(person_t* _head, person_t* _new)
 {
-	if ((NULL == _head) || (NULL == _new))
+	if (NULL == _new)
 	{
 		return NULL;
 	}
@@ -64,12 +64,12 @@ person_t* ListInsertByKey(person_t* _head, int _key, person_t* _new)
 		{
 			currentNode = currentNode->m_next;
 		}
-		if (NULL != currentNode->m_next)
+		if (currentNode->m_next->m_id >= _key)
 		{
 			_new->m_next = currentNode->m_next;
+			currentNode->m_next = _new;
 		}
 	}
-	currentNode->m_next = _new;
 
 	return _head;
 }
@@ -77,13 +77,17 @@ person_t* ListInsertByKey(person_t* _head, int _key, person_t* _new)
 person_t* ListRemoveByKey(person_t* _head, int _key, person_t** _removed)
 {
 	person_t* currentNode = _head;
-	if ((NULL == _head) || (NULL == _removed))
+	if (NULL == _head)
 	{
 		return _head;
 	}
 	if (_head->m_id == _key)
 	{
-		*_removed = _head;
+		if (NULL != _removed)
+		{
+			*_removed = _head;
+		}
+
 		_head = _head->m_next;
 	}
 	else
@@ -92,9 +96,12 @@ person_t* ListRemoveByKey(person_t* _head, int _key, person_t** _removed)
 		{
 			currentNode = currentNode->m_next;
 		}
-		if (NULL != currentNode->m_next)
+		if (_key == currentNode->m_next->m_id)
 		{
-			*_removed = currentNode->m_next;
+			if (NULL != _removed)
+			{
+				*_removed = currentNode->m_next;
+			}
 			currentNode->m_next = currentNode->m_next->m_next;			
 		}
 	}
@@ -147,13 +154,11 @@ void ListDestroy(person_t* _head)
 	}
 	while (NULL != _head->m_next)
 	{
-		ListRemoveHead(_head, NULL);
-		temp = _head;
-		_head = _head->m_next;
+		_head = ListRemoveHead(_head, &temp);
 		PersonNodeDestroy(temp);
 	}
-	ListRemoveHead(_head, NULL);
-	PersonNodeDestroy(_head);
+	_head = ListRemoveHead(_head, &temp);
+	PersonNodeDestroy(temp);	
 
 	return;	
 }

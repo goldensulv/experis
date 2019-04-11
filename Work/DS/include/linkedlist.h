@@ -2,7 +2,7 @@
 	Title:			linkedlist.h
 	Description:	Linked List ADT - header
 	Author:			Shalev Goldfarb
-	Last updated:	10.04.19
+	Last updated:	11.04.19
 */
 
 typedef struct person person_t;
@@ -52,6 +52,9 @@ person_t* PersonNodeCreate(int _id, char* _name, int _age);
 
 void PersonNodeDestroy(person_t* _person);
 
+/*
+	Description: Iterates over a linked list starting at _head, and frees memory previously allocated by calls to PersonNodeCreate().
+*/
 void ListDestroy(person_t* _head);
 
 /*
