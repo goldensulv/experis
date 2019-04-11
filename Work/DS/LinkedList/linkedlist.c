@@ -23,11 +23,9 @@ person_t* ListInsertHead(person_t* _head, person_t* _new)
 	{
 		return NULL;
 	}
-
 	_new->m_next = _head;
-	_head = _new;
 
-	return _head;
+	return _new;
 }
 
 person_t* ListRemoveHead(person_t* _head, person_t** _removed)
@@ -39,14 +37,18 @@ person_t* ListRemoveHead(person_t* _head, person_t** _removed)
 	if (NULL != _removed)
 	{
 		*_removed = _head;
+		*_removed->m_next = NULL;
 	}
-	_head = _head->m_next;
 
-	return _head;
+	return _head->m_next;
 }
 
 person_t* ListInsertByKey(person_t* _head, int _key, person_t* _new)
 {
+	/*
+	person_t* place = FindPlace(_head, _key);
+	place->m_next = ListInsertHead(place->m_next, _new);
+	*/
 	person_t* currentNode = _head;
 	if ((NULL == _head) || (NULL == _new))
 	{
@@ -87,7 +89,6 @@ person_t* ListRemoveByKey(person_t* _head, int _key, person_t** _removed)
 		{
 			*_removed = _head;
 		}
-
 		_head = _head->m_next;
 	}
 	else
